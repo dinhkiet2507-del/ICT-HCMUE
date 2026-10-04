@@ -1,189 +1,387 @@
-```html
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Các bài tập đã thực hiện">
-    <title>Portfolio | Bài tập</title>
+
+    <meta name="description" content="Bài tập - Hồ sơ học tập">
+    <title>Bài tập | Hồ sơ học tập</title>
+
     <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* =================================
+           BÀI TẬP
+        ================================= */
+
+        .learning-section {
+            min-height: 100vh;
+            padding: 140px 20px 80px;
+        }
+
+        .learning-header {
+            text-align: center;
+            max-width: 850px;
+            margin: 0 auto 50px;
+        }
+
+        .learning-header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .learning-header p {
+            color: #b8c7dc;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        .learning-grid {
+            max-width: 1150px;
+            margin: 0 auto;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .learning-card {
+            position: relative;
+
+            padding: 30px;
+            min-height: 240px;
+
+            border-radius: 20px;
+
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+
+            backdrop-filter: blur(15px);
+
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .learning-card:hover {
+            transform: translateY(-8px);
+
+            border-color: rgba(80, 180, 255, 0.5);
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.3),
+                0 0 25px rgba(50, 150, 255, 0.12);
+        }
+
+        .learning-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .learning-card h2 {
+            font-size: 23px;
+            margin-bottom: 10px;
+        }
+
+        .learning-card p {
+            color: #aebdd2;
+            line-height: 1.7;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+
+        .learning-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            width: fit-content;
+
+            padding: 10px 18px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: white;
+
+            background: rgba(70, 150, 255, 0.15);
+
+            border: 1px solid rgba(100, 180, 255, 0.3);
+
+            transition: 0.3s ease;
+        }
+
+        .learning-btn:hover {
+            background: rgba(70, 150, 255, 0.3);
+            transform: translateX(4px);
+        }
+
+
+        /* =================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 900px) {
+
+            .learning-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .learning-header h1 {
+                font-size: 36px;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .learning-section {
+                padding-top: 120px;
+            }
+
+            .learning-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .learning-header h1 {
+                font-size: 30px;
+            }
+
+            .learning-header p {
+                font-size: 15px;
+            }
+        }
+    </style>
 </head>
+
 
 <body>
 
-<canvas id="particles"></canvas>
-<div class="background"></div>
-<div class="orb one"></div>
-<div class="orb two"></div>
+    <!-- =================================
+         PARTICLE BACKGROUND
+    ================================= -->
 
-<header class="navbar">
-    <div class="nav-container">
+    <canvas id="particles"></canvas>
 
-        <a href="index.html" class="logo">
-            <span>HỒ SƠ HỌC TẬP</span>
-        </a>
+    <div class="background"></div>
 
-        <nav>
-            <ul class="nav-menu">
-                <li><a href="index.html">Trang chủ</a></li>
-                <li><a href="about.html">Giới thiệu</a></li>
-                <li><a href="exercises.html">Bài tập</a></li>
-<li><a href="hoclieu.html">Học liệu</a></li>            </ul>
-        </nav>
+    <div class="orb one"></div>
+    <div class="orb two"></div>
 
-    </div>
-</header>
 
-<main>
+    <!-- =================================
+         NAVBAR
+    ================================= -->
 
-<section class="page-section">
+    <header class="navbar">
 
-    <div class="container">
+        <div class="nav-container">
 
-        <div class="section-title">
+            <a href="index.html" class="logo">
+                <span>HỒ SƠ HỌC TẬP</span>
+            </a>
 
-            <div class="small-title">
-                MY EXERCISES
+            <nav>
+
+                <ul class="nav-menu">
+
+                    <li>
+                        <a href="index.html">
+                            Trang chủ
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="about.html">
+                            Giới thiệu
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="exercises.html">
+                            Bài tập
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="hoclieu.html" class="active">
+                            Học liệu
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================
+         NỘI DUNG BÀI  TẬP
+    ================================= -->
+
+    <main>
+
+        <section class="learning-section">
+
+            <div class="learning-header">
+
+                <div class="badge">
+                    MY EXERCISES
+                </div>
+
+                <h1>
+                    <span class="gradient-text">
+                        Bài tập
+                    </span>
+                </h1>
+
+                <p>
+                    Tổng hợp các bài tập đã thực hiện trong quá trình học tập.
+                </p>
+
             </div>
 
-            <h2>
-                Bài tập
-            </h2>
 
-            <p>
-                Tổng hợp các bài tập đã thực hiện
-                trong quá trình học tập.
-            </p>
+            <!-- =================================
+                 DANH SÁCH HỌC LIỆU
+            ================================= -->
 
-        </div>
+            <div class="learning-grid">
 
-        <div class="exercise-grid">
 
-            <article class="exercise-card">
+                <!-- HỌC LIỆU 01 -->
 
-                <div class="exercise-number">
-                    01
+                <div class="learning-card">
+
+                    <div>
+
+
+                        <h2>
+                            Bài tập 1
+                        </h2>
+
+                        <p>
+                            Thực hành tự đánh giá năng lực ứng dụng công nghệ thông tin trong dạy học của bản thân và đề xuất kế hoạch tự học, tự điều chỉnh.
+                        </p>
+
+                    </div>
+
+                    <a href="bai1ict.html" class="btn" target="_blank"> Xem bài tập → </a>
                 </div>
 
-                <h3>
-                    Bài tập 1
-                </h3>
 
-                <p>
-                     Thực hành tự đánh giá năng lực ứng dụng công nghệ thông tin trong dạy học của bản thân và đề xuất kế hoạch tự học, tự điều chỉnh.
-                </p>
+                <!-- HỌC LIỆU 02 -->
 
-                <a href="bai1.html"
-   class="btn"
-   target="_blank">
-    Xem bài tập →
-</a>
+                <div class="learning-card">
 
-            </article>
+                    <div>
 
 
-            <article class="exercise-card">
+                        <h2>
+                            Bài tập 2
+                        </h2>
 
-                <div class="exercise-number">
-                    02
+                        <p>
+                            Thực hành tìm kiếm tài liệu tham khảo và thiết kế, biên tập hình ảnh
+                        </p>
+
+                    </div>
+
+                    <a href="bai2.html" class="btn" target="_blank"> Xem bài tập → </a>
                 </div>
 
-                <h3>
-                    Bài tập 2
-                </h3>
 
-                <p>
-                    Thực hành tìm kiếm tài liệu tham khảo và thiết kế, biên tập hình ảnh 
+                <!-- HỌC LIỆU 03 -->
 
-                </p>
+                <div class="learning-card">
 
-              <a href="bai2.html"
-   class="btn"
-   target="_blank">
-    Xem bài tập →
-</a>
-            </article>
+                    <div>
 
 
-            <article class="exercise-card">
+                        <h2>
+                            Bài tập 3
+                        </h2>
 
-                <div class="exercise-number">
-                    03
+                        <p>
+                            Mô tả
+                        </p>
+
+                    </div>
+
+                    <a href="bai2.html" class="btn" target="_blank"> Xem bài tập → </a>
+                </div>
+                <!-- HỌC LIỆU 04 -->
+
+               <div class="learning-card">
+
+                    <div>
+
+
+                        <h2>
+                            Bài tập 4
+                        </h2>
+
+                        <p>
+                            Mô tả
+                        </p>
+
+                    </div>
+
+                    <a href="bai2.html" class="btn" target="_blank"> Xem bài tập → </a>
                 </div>
 
-                <h3>
-                    Bài tập 3
-                </h3>
 
-                <p>
-                    Mô tả ngắn về nội dung
-                    của bài tập số 3.
-                </p>
+                <!-- HỌC LIỆU 05 -->
 
-                <a href="#" class="exercise-link">
-                    Xem bài tập →
-                </a>
+               <div class="learning-card">
 
-            </article>
+                    <div>
 
+                        <h2>
+                            Bài tập 5
+                        </h2>
 
-            <article class="exercise-card">
+                        <p>
+                            Mô tả
+                        </p>
 
-                <div class="exercise-number">
-                    04
+                    </div>
+
+                    <a href="bai2.html" class="btn" target="_blank"> Xem bài tập → </a>
                 </div>
 
-                <h3>
-                    Bài tập 4
-                </h3>
+            </div>
 
-                <p>
-                    Mô tả ngắn về nội dung
-                    của bài tập số 4.
-                </p>
+        </section>
 
-                <a href="#" class="exercise-link">
-                    Xem bài tập →
-                </a>
-
-            </article>
+    </main>
 
 
-            <article class="exercise-card">
+    <!-- =================================
+         FOOTER
+    ================================= -->
 
-                <div class="exercise-number">
-                    05
-                </div>
+    <footer>
+        © 2026 Trần Đình Kiệt. All Rights Reserved.
+    </footer>
 
-                <h3>
-                    Bài tập 5
-                </h3>
 
-                <p>
-                    Mô tả ngắn về nội dung
-                    của bài tập số 5.
-                </p>
+    <!-- =================================
+         JAVASCRIPT
+    ================================= -->
 
-                <a href="#" class="exercise-link">
-                    Xem bài tập →
-                </a>
-
-            </article>
-
-        </div>
-
-    </div>
-
-</section>
-
-</main>
-
-<footer>
-    © 2026 Trần Đình Kiệt. All Rights Reserved.
-</footer>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>
-```
