@@ -1,971 +1,480 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập 2 - Quá Trình Lên Men Sữa Chua</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+        /* Glassmorphism Styles */
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
 
-    <title>Bài 2 - Quá trình lên men sữa chua</title>
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
 
-    <!-- MathJax cho các công thức toán học -->
+        .glass-card:hover {
+            border-color: rgba(56, 189, 248, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(14, 165, 233, 0.1);
+        }
+
+        /* Glowing Effects & Background Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.35;
+        }
+
+        .orb-1 {
+            top: -10%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #0284c7 0%, rgba(0,0,0,0) 70%);
+        }
+
+        .orb-2 {
+            bottom: 10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #6366f1 0%, rgba(0,0,0,0) 70%);
+        }
+
+        .orb-3 {
+            top: 40%;
+            left: 30%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #0d9488 0%, rgba(0,0,0,0) 70%);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen pb-16 antialiased">
+
+    <!-- Interactive Background Particles Canvas -->
+    <canvas id="particleCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- Glowing Orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 glass-panel border-b border-slate-800/80 mb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-sky-500/20">
+                        TK
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-300">Trần Đình Kiệt</span>
+                        <span class="block text-xs text-sky-400 font-medium">Hồ Sơ Học Tập Khoa Học Tự Nhiên</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="exercises.html" class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all duration-200 border border-slate-700/50 hover:border-sky-500/30">
+                        <i class="fa-solid fa-arrow-left mr-2 text-sky-400"></i> Bài tập
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        
+        <!-- Header Section -->
+        <header class="glass-panel p-8 rounded-2xl border border-slate-800 shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+                <a href="exercises.html" class="inline-flex items-center text-sm font-medium text-sky-400 hover:text-sky-300 transition-colors">
+                    <i class="fa-solid fa-chevron-left mr-2 text-xs"></i> Quay lại danh sách Bài tập
+                </a>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                    <i class="fa-solid fa-flask-vial mr-1.5"></i> 📝 BÀI TẬP / BÀI TẬP 2
+                </span>
+            </div>
+
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-snug">
+                Câu 5: Quá Trình Lên Men Sữa Chua & Vai Trò Của Vi Khuẩn Lactic
+            </h1>
+            <p class="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">
+                Ứng dụng kiến thức Khoa học Tự nhiên phân tích cơ chế biến đổi sinh hóa, cấu trúc protein casein và các yếu tố ảnh hưởng tới chất lượng sản phẩm lên men.
+            </p>
+        </header>
+
+        <!-- Question Content Card -->
+        <section class="glass-card p-6 sm:p-8 rounded-2xl border-l-4 border-l-sky-500">
+            <h2 class="text-lg font-bold text-sky-400 flex items-center gap-2 mb-3">
+                <i class="fa-solid fa-circle-question"></i> Đề bài yêu cầu:
+            </h2>
+            <p class="text-slate-200 text-sm sm:text-base leading-relaxed italic bg-slate-900/40 p-4 rounded-xl border border-slate-800">
+                Trong quá trình làm sữa chua, sữa từ trạng thái lỏng chuyển thành sản phẩm có vị chua và cấu trúc đặc hơn. Hãy sử dụng kiến thức Khoa học Tự nhiên để trả lời các câu hỏi:
+            </p>
+            <ul class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-300">
+                <li class="flex items-start gap-2 bg-slate-800/30 p-2.5 rounded-lg border border-slate-700/30">
+                    <span class="text-sky-400 font-bold">a)</span> Xác định vai trò của vi khuẩn lactic và vẽ sơ đồ minh họa quá trình chuyển hóa đường trong sữa thành acid lactic.
+                </li>
+                <li class="flex items-start gap-2 bg-slate-800/30 p-2.5 rounded-lg border border-slate-700/30">
+                    <span class="text-sky-400 font-bold">b)</span> Viết phương trình tổng quát thích hợp biểu diễn quá trình lên men lactic.
+                </li>
+                <li class="flex items-start gap-2 bg-slate-800/30 p-2.5 rounded-lg border border-slate-700/30">
+                    <span class="text-sky-400 font-bold">c)</span> Giải thích vì sao sự giảm pH làm thay đổi trạng thái của protein sữa.
+                </li>
+                <li class="flex items-start gap-2 bg-slate-800/30 p-2.5 rounded-lg border border-slate-700/30">
+                    <span class="text-sky-400 font-bold">d)</span> Phân tích ảnh hưởng của nhiệt độ và thời gian ủ đến hoạt động của vi khuẩn và chất lượng sản phẩm.
+                </li>
+            </ul>
+        </section>
+
+        <!-- Answer Content Section -->
+        <div class="space-y-8">
+            
+            <!-- Part A: LAB Role & Diagram -->
+            <section class="glass-panel p-6 sm:p-8 rounded-2xl space-y-6">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-4">
+                    <span class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold text-lg">a</span>
+                    <h3 class="text-xl font-bold text-white">Vai trò của Vi khuẩn Lactic (LAB) & Sơ đồ chuyển hóa</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Feature 1 -->
+                    <div class="glass-card p-5 rounded-xl border border-slate-800">
+                        <div class="flex items-center gap-3 text-sky-400 font-semibold mb-2">
+                            <i class="fa-solid fa-shield-halved text-lg"></i>
+                            <h4>Tính chất bảo quản</h4>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Axit hữu cơ là sản phẩm cuối cùng của quá trình chuyển hóa carbohydrate do LAB tạo ra. Lên men đồng hình tạo acid lactic, dị hình tạo acid lactic, acid acetic, ethanol và $CO_2$. Sự giảm pH nhanh chóng ức chế vi khuẩn gây hư hỏng và vi khuẩn gây bệnh. LAB còn tiết bacteriocin (như nisin) có bản chất peptide giúp bảo quản sinh học.
+                        </p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="glass-card p-5 rounded-xl border border-slate-800">
+                        <div class="flex items-center gap-3 text-amber-400 font-semibold mb-2">
+                            <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                            <h4>Sự hình thành hương vị</h4>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Quá trình chín và lên men nhờ starter LAB và non-starter LAB giúp phân giải lactose, lipolysis (phân giải lipid thành acid béo tự do) và proteolysis (phân giải casein). Hương vị đặc trưng được tạo nên từ acid lactic cùng các hợp chất thơm như Acetaldehyde, diacetyl, propanoic acid...
+                        </p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="glass-card p-5 rounded-xl border border-slate-800">
+                        <div class="flex items-center gap-3 text-emerald-400 font-semibold mb-2">
+                            <i class="fa-solid fa-cubes text-lg"></i>
+                            <h4>Cải thiện cấu trúc thực phẩm</h4>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Sữa chua có kết cấu mềm, mịn và đặc nhờ sự sản sinh exopolysaccharide (EPS) làm chất tạo độ nhớt. Cấu trúc gel được củng cố bằng sự đông tụ protein khi điện tích âm trên bề mặt casein bị trung hòa bởi acid do LAB tạo ra.
+                        </p>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="glass-card p-5 rounded-xl border border-slate-800">
+                        <div class="flex items-center gap-3 text-rose-400 font-semibold mb-2">
+                            <i class="fa-solid fa-heart-pulse text-lg"></i>
+                            <h4>Đặc tính có lợi cho sức khỏe</h4>
+                        </div>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Thủy phân casein bởi <i>L. helveticus</i> tạo ra các peptide hỗ trợ hạ huyết áp, miễn dịch và gắn canxi. Enzyme $\beta$-galactosidase do <i>S. thermophilus</i> và <i>L. bulgaricus</i> tiết ra giúp người bất dung nạp lactose dễ dàng hấp thu sản phẩm.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Diagram Display Section -->
+                <div class="mt-8 space-y-4">
+                    <h4 class="text-md font-semibold text-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-diagram-project text-sky-400"></i> Sơ đồ minh họa quá trình chuyển hóa đường trong sữa thành acid lactic:
+                    </h4>
+                    
+                    <div class="glass-card p-4 rounded-xl border border-slate-700/60 flex flex-col items-center">
+                        <div class="relative overflow-hidden rounded-lg group max-w-3xl w-full bg-slate-950 p-2 border border-slate-800">
+                            <img src="so-do-len-men.png.png" alt="Sơ đồ minh họa các con đường lên men chính của glucose" class="w-full h-auto object-contain rounded transition-transform duration-500 group-hover:scale-[1.02]">
+                        </div>
+                        <p class="mt-3 text-xs text-slate-400 text-center italic">
+                            Hình 1. Các con đường lên men chính của glucose (Lên men đồng hình & Lên men dị hình lactic). <br>
+                            <span class="text-slate-500">Ghi chú: Hiệu chỉnh từ "Major fermentation pathways of glucose", trong Lactic Acid Bacteria, bởi Trần Đình Kiệt, chèn thêm công thức phân tử.</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Part B: Chemical Equations -->
+            <section class="glass-panel p-6 sm:p-8 rounded-2xl space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-4">
+                    <span class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold text-lg">b</span>
+                    <h3 class="text-xl font-bold text-white">Phương trình tổng quát biểu diễn quá trình lên men lactic</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <!-- Homofermentative -->
+                    <div class="glass-card p-5 rounded-xl border-l-4 border-l-sky-500">
+                        <h4 class="text-slate-200 font-semibold mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-dna text-sky-400"></i> Lên men đồng hình:
+                        </h4>
+                        <div class="bg-slate-900/80 p-4 rounded-lg font-mono text-sm text-sky-300 border border-slate-800 overflow-x-auto">
+                            $\text{C}_6\text{H}_{12}\text{O}_6 \xrightarrow{\text{Vi khuẩn lên men đồng hình}} 2\,\text{C}_3\text{H}_6\text{O}_3 + 2\,\text{ATP}$
+                        </div>
+                        <p class="text-xs text-slate-400 mt-2">(Glucose / Galactose $\rightarrow$ 2 Acid Lactic + 2 ATP)</p>
+                    </div>
+
+                    <!-- Heterofermentative -->
+                    <div class="glass-card p-5 rounded-xl border-l-4 border-l-purple-500">
+                        <h4 class="text-slate-200 font-semibold mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-code-branch text-purple-400"></i> Lên men dị hình:
+                        </h4>
+                        <div class="bg-slate-900/80 p-4 rounded-lg font-mono text-sm text-purple-300 border border-slate-800 overflow-x-auto">
+                            $\text{C}_6\text{H}_{12}\text{O}_6 \xrightarrow{\text{Vi khuẩn lên men dị hình}} \text{C}_3\text{H}_6\text{O}_3 + \text{C}_2\text{H}_5\text{OH} + \text{CO}_2 + 1\,\text{ATP}$
+                        </div>
+                        <p class="text-xs text-slate-400 mt-2">(Glucose $\rightarrow$ Acid Lactic + Ethanol + Carbon Dioxide + 1 ATP)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Part C: pH & Protein state -->
+            <section class="glass-panel p-6 sm:p-8 rounded-2xl space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-4">
+                    <span class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold text-lg">c</span>
+                    <h3 class="text-xl font-bold text-white">Ảnh hưởng của sự giảm pH đến trạng thái Protein sữa</h3>
+                </div>
+
+                <div class="glass-card p-6 rounded-xl border border-slate-800 space-y-3">
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Khi độ pH của môi trường giảm xuống dưới <span class="text-sky-400 font-semibold">5.0</span> (tiệm cận điểm đẳng điện pI $\approx 4.6$), các micelle <span class="text-amber-300 font-semibold">casein</span> (protein chính trong sữa) bị đứt gãy liên kết tĩnh điện do sự proton hóa các gốc acid amin.
+                    </p>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Protein đã biến tính sẽ giải phóng các nhóm kỵ nước và tái cấu trúc thông qua tương tác kỵ nước giữa các phân tử casein. Mạng lưới liên kết không gian ba chiều này giữ các phân tử nước bên trong, tạo nên trạng thái <span class="text-emerald-400 font-semibold">đông tụ bán rắn (gel)</span> đặc trưng cho sữa chua.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Part D: Temperature & Incubation time -->
+            <section class="glass-panel p-6 sm:p-8 rounded-2xl space-y-6">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-4">
+                    <span class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold text-lg">d</span>
+                    <h3 class="text-xl font-bold text-white">Ảnh hưởng của Nhiệt độ & Thời gian ủ</h3>
+                </div>
+
+                <!-- Temperature Impact -->
+                <div class="space-y-4">
+                    <h4 class="text-lg font-semibold text-amber-400 flex items-center gap-2">
+                        <i class="fa-solid fa-temperature-half"></i> 1. Ảnh hưởng của Nhiệt độ ủ
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="glass-card p-5 rounded-xl border border-slate-800 space-y-2">
+                            <h5 class="text-slate-200 font-bold text-sm text-sky-400">Đối với hoạt động của vi khuẩn:</h5>
+                            <ul class="text-xs sm:text-sm text-slate-300 space-y-2 list-disc list-inside">
+                                <li><strong class="text-slate-100">Khoảng nhiệt độ tối ưu:</strong> Chủng ưa nhiệt như <i>S. thermophilus</i> ($40-42^\circ\text{C}$) & <i>L. bulgaricus</i> ($42-46^\circ\text{C}$) phối hợp tương hỗ (proto-cooperation) đạt hiệu suất cao nhất. Chủng ưa ấm ($28-34^\circ\text{C}$) thích hợp cho cheese/buttermilk.</li>
+                                <li><strong class="text-slate-100">Nhiệt độ quá thấp:</strong> Giảm hoạt tính enzyme, kéo dài pha thích ứng (lag phase) và làm chậm sinh acid.</li>
+                                <li><strong class="text-slate-100">Nhiệt độ quá cao:</strong> Ức chế sinh trưởng, làm biến tính enzyme sinh học hoặc tiêu diệt vi khuẩn, mất cân bằng tỷ lệ chủng phối hợp.</li>
+                            </ul>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-xl border border-slate-800 space-y-2">
+                            <h5 class="text-slate-200 font-bold text-sm text-amber-400">Đối với chất lượng sản phẩm:</h5>
+                            <ul class="text-xs sm:text-sm text-slate-300 space-y-2 list-disc list-inside">
+                                <li><strong class="text-slate-100">Nhiệt độ thấp hơn chuẩn:</strong> Sữa lâu đông tụ, dễ tạp nhiễm vi sinh vật lạ; sản phẩm lỏng lẻo, kém chua và thiếu hương thơm.</li>
+                                <li><strong class="text-slate-100">Nhiệt độ cao hơn chuẩn:</strong> Axit hóa quá nhanh làm mạng lưới casein hình thành không đồng đều, gây hiện tượng tách nước (tách huyết thanh sữa), khối đông co rút, có vị chua gắt hoặc mùi vị lạ.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Time Impact -->
+                <div class="space-y-4 pt-4 border-t border-slate-800/60">
+                    <h4 class="text-lg font-semibold text-emerald-400 flex items-center gap-2">
+                        <i class="fa-solid fa-clock"></i> 2. Ảnh hưởng của Thời gian ủ
+                    </h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="glass-card p-5 rounded-xl border border-slate-800 space-y-2">
+                            <h5 class="text-slate-200 font-bold text-sm text-sky-400">Đối với hoạt động của vi khuẩn:</h5>
+                            <ul class="text-xs sm:text-sm text-slate-300 space-y-2 list-disc list-inside">
+                                <li><strong class="text-slate-100">Thời gian tối ưu:</strong> Vi khuẩn nhân nhanh trong pha mũ, giảm pH xuống $4.5 - 4.7$. Hương thơm (acetaldehyde, diacetyl) đạt mức bão hòa hoàn hảo.</li>
+                                <li><strong class="text-slate-100">Thời gian quá ngắn:</strong> Quần thể chưa đạt mật độ tối đa, chưa tích tụ đủ acid lactic.</li>
+                                <li><strong class="text-slate-100">Thời gian quá dài:</strong> Tích tụ quá nhiều acid gây tự acid hóa (autoacidification), cạn kiệt dinh dưỡng làm sụt giảm vi khuẩn sống.</li>
+                            </ul>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-xl border border-slate-800 space-y-2">
+                            <h5 class="text-slate-200 font-bold text-sm text-emerald-400">Đối với chất lượng sản phẩm:</h5>
+                            <ul class="text-xs sm:text-sm text-slate-300 space-y-2 list-disc list-inside">
+                                <li><strong class="text-slate-100">Ủ chưa đủ thời gian:</strong> pH chưa đạt điểm đẳng điện (pH $\approx 4.6$), gel lỏng lẻo, độ chua thấp và vị nhạt nhẽo.</li>
+                                <li><strong class="text-slate-100">Ủ quá thời gian:</strong> Quá acid (chua gắt), vỡ cấu trúc gel làm nứt khối đông, tách nước nghiêm trọng và giảm giá trị cảm quan.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- References Section -->
+            <section class="glass-panel p-6 rounded-2xl space-y-3 border border-slate-800">
+                <h4 class="text-md font-semibold text-slate-300 flex items-center gap-2">
+                    <i class="fa-solid fa-book text-sky-400"></i> Tài liệu tham khảo
+                </h4>
+                <ul class="text-xs text-slate-400 space-y-2 leading-relaxed font-mono pl-4 list-disc">
+                    <li>
+                        Vinderola, G., Ouwehand, A., Salminen, S., & Von Wright, A. (2024). <i>Lactic acid bacteria</i>. <a href="https://doi.org/10.1201/9781003352075" target="_blank" class="text-sky-400 hover:underline">https://doi.org/10.1201/9781003352075</a>
+                    </li>
+                    <li>
+                        Chen, C., Zhao, S., Hao, G., Yu, H., Tian, H., & Zhao, G. (2017). Role of lactic acid bacteria on the yogurt flavour: A review. <i>International Journal of Food Properties</i>, 20(sup1), S316-S330. <a href="https://doi.org/10.1080/10942912.2017.1295988" target="_blank" class="text-sky-400 hover:underline">https://doi.org/10.1080/10942912.2017.1295988</a>
+                    </li>
+                    <li>
+                        Widyastuti, Y., Rohmatussolihat, & Febrisiantosa, A. (2014). The role of lactic acid bacteria in milk fermentation. <i>Food and Nutrition Sciences</i>, 05(04), 435-442. <a href="https://doi.org/10.4236/fns.2014.54051" target="_blank" class="text-sky-400 hover:underline">https://doi.org/10.4236/fns.2014.54051</a>
+                    </li>
+                </ul>
+            </section>
+
+        </div>
+
+        <!-- Footer Navigation Button -->
+        <div class="pt-6 pb-12 flex justify-center">
+            <a href="exercises.html" class="inline-flex items-center px-6 py-3 rounded-xl text-base font-medium text-white bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 transition-all duration-200 shadow-lg shadow-sky-500/25 border border-sky-400/30">
+                <i class="fa-solid fa-arrow-left mr-2.5"></i> Quay lại danh sách Bài tập
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Interactive Background Particles Script -->
+    <script>
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray = [];
+        const numberOfParticles = 40;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(56, 189, 248, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+    </script>
+
+    <!-- MathJax Support for Render LaTeX -->
     <script>
         window.MathJax = {
             tex: {
-                inlineMath: [['\\(', '\\)']],
-                displayMath: [['\\[', '\\]']]
-            },
-            svg: {
-                fontCache: 'global'
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
             }
         };
     </script>
-
-    <script async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
-
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            line-height: 1.7;
-
-            color: #333333;
-
-            max-width: 900px;
-
-            margin: 0 auto;
-
-            padding: 20px;
-
-            background-color: #f9f9f9;
-        }
-
-
-        .container {
-
-            background-color: #ffffff;
-
-            padding: 30px;
-
-            border-radius: 8px;
-
-            box-shadow:
-                0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-
-        h1,
-        h2,
-        h3 {
-
-            color: #2c3e50;
-        }
-
-
-        .question-title {
-
-            font-size: 1.1em;
-
-            font-weight: bold;
-
-            margin-bottom: 15px;
-        }
-
-
-        .section-title {
-
-            font-weight: bold;
-
-            font-size: 1.1em;
-
-            margin-top: 25px;
-
-            margin-bottom: 10px;
-
-            color: #2c3e50;
-        }
-
-
-        .content-block {
-
-            margin-bottom: 20px;
-        }
-
-
-        p {
-
-            margin-top: 8px;
-
-            margin-bottom: 12px;
-        }
-
-
-        ul {
-
-            margin-top: 5px;
-
-            padding-left: 25px;
-        }
-
-
-        li {
-
-            margin-bottom: 12px;
-        }
-
-
-        .image-container {
-
-            text-align: center;
-
-            margin: 25px 0;
-        }
-
-
-        .image-container img {
-
-            max-width: 100%;
-
-            height: auto;
-
-            border: 1px solid #ddd;
-
-            border-radius: 4px;
-        }
-
-
-        .image-caption {
-
-            font-style: italic;
-
-            font-size: 0.9em;
-
-            color: #555555;
-
-            margin-top: 8px;
-
-            line-height: 1.5;
-        }
-
-
-        .formula-box {
-
-            background-color: #f4f6f7;
-
-            padding: 15px 20px;
-
-            border-left:
-                4px solid #3498db;
-
-            margin: 15px 0;
-
-            border-radius: 4px;
-
-            overflow-x: auto;
-        }
-
-
-        .formula {
-
-            font-size: 18px;
-
-            text-align: center;
-
-            margin: 15px 0;
-
-            white-space: nowrap;
-        }
-
-
-        .reference-list {
-
-            font-size: 0.95em;
-
-            padding-left: 25px;
-        }
-
-
-        .reference-list li {
-
-            margin-bottom: 10px;
-
-            word-break: normal;
-        }
-
-
-        .reference-list a {
-
-            color: #2980b9;
-
-            word-break: break-word;
-        }
-
-
-        hr {
-
-            border: none;
-
-            border-top:
-                1px solid #dddddd;
-
-            margin: 30px 0;
-        }
-
-
-        /* Công thức hóa học */
-
-        sub {
-
-            font-size: 0.75em;
-
-            vertical-align: sub;
-        }
-
-
-        sup {
-
-            font-size: 0.75em;
-
-            vertical-align: super;
-        }
-
-
-        /* Mobile */
-
-        @media (max-width: 600px) {
-
-            body {
-
-                padding: 10px;
-
-                font-size: 15px;
-            }
-
-            .container {
-
-                padding: 20px 16px;
-            }
-
-            .question-title {
-
-                font-size: 1em;
-            }
-
-            .section-title {
-
-                font-size: 1em;
-            }
-
-            .formula {
-
-                font-size: 15px;
-            }
-
-            .formula-box {
-
-                padding: 12px;
-            }
-        }
-
-    </style>
-
-</head>
-
-
-<body>
-
-
-<div class="container">
-
-
-    <!-- =========================
-         CÂU HỎI
-    ========================== -->
-
-    <div class="question-title">
-
-        Câu 5. Trong quá trình làm sữa chua,
-        sữa từ trạng thái lỏng chuyển thành sản phẩm
-        có vị chua và cấu trúc đặc hơn.
-        Hãy sử dụng kiến thức Khoa học Tự nhiên
-        để trả lời các câu hỏi:
-
-    </div>
-
-
-    <div class="content-block">
-
-        <p>
-            a) Xác định vai trò của vi khuẩn lactic
-            và vẽ sơ đồ minh họa quá trình chuyển hóa
-            đường trong sữa thành acid lactic.
-        </p>
-
-        <p>
-            b) Viết phương trình tổng quát thích hợp
-            biểu diễn quá trình lên men lactic.
-        </p>
-
-        <p>
-            c) Giải thích vì sao sự giảm pH làm thay đổi
-            trạng thái của protein sữa.
-        </p>
-
-        <p>
-            d) Phân tích ảnh hưởng của nhiệt độ và
-            thời gian ủ đến hoạt động của vi khuẩn
-            và chất lượng sản phẩm.
-        </p>
-
-    </div>
-
-
-    <hr>
-
-
-    <!-- =========================
-         BÀI LÀM
-    ========================== -->
-
-    <div class="section-title">
-        Bài làm:
-    </div>
-
-
-    <!-- =========================
-         PHẦN A
-    ========================== -->
-
-    <div class="section-title">
-
-        a) Vai trò của vi khuẩn lactic (LAB)
-        trong quá trình lên men sữa:
-
-    </div>
-
-
-    <ul>
-
-        <li>
-
-            <strong>
-                Tính chất bảo quản của vi khuẩn lactic:
-            </strong>
-
-            Axit hữu cơ là sản phẩm cuối cùng
-            của quá trình chuyển hóa carbohydrate
-            do vi khuẩn axit lactic (LAB) tạo ra.
-
-            Các loài LAB lên men đồng hình
-            (homofermentative) chuyển hóa đường
-            trong sữa chủ yếu thành axit lactic,
-            trong khi các loài lên men dị hình
-            (heterofermentative) chuyển hóa lactose
-            thành axit lactic, axit axetic, ethanol
-            và CO<sub>2</sub>.
-
-            Việc sản xuất acid hữu cơ nhanh chóng
-            giúp làm giảm pH của sản phẩm, qua đó
-            ức chế sự phát triển của các vi khuẩn
-            gây hư hỏng và vi khuẩn gây bệnh.
-
-            Các chủng vi khuẩn axit lactic (LAB)
-            phân lập từ sữa tươi của bò, dê và cừu
-            được phát hiện có hoạt tính kháng lại
-            4 loài nấm gây hư hỏng thực phẩm:
-            <em>Penicillium expansum</em>,
-            <em>Mucor plumbeus</em>,
-            <em>Kluyveromyces lactis</em> và
-            <em>Pichia anomala</em>.
-
-            Vi khuẩn lactic tiết ra các chất kháng khuẩn
-            bản chất peptide gọi là bacteriocin
-            (nisin, bacteriocin,...) là chất bảo quản
-            sinh học.
-
-        </li>
-
-
-        <li>
-
-            <strong>
-                Sự hình thành hương vị:
-            </strong>
-
-            Sự hình thành hương vị và các đặc tính
-            hương vị đặc trưng của từng loại phô mai
-            được phát triển trong quá trình chín nhờ
-            hoạt động của cả vi khuẩn lactic khởi động
-            (starter LAB) và vi khuẩn lactic không khởi động
-            (non-starter LAB).
-
-            Các bước hình thành hương vị phô mai do LAB
-            thực hiện bao gồm: chuyển hóa lactose,
-            lactate và citrate; phân giải lipid
-            (lipolysis) giải phóng các axit béo tự do;
-            và phân giải protein (proteolysis) –
-            quá trình phân hủy casein theo sau là
-            sự dị hóa axit amin.
-
-            Hương vị của sữa chua được tạo nên bởi
-            nhiều hợp chất khác nhau, trong đó axit lactic
-            đóng vai trò chủ đạo, cùng với các hợp chất
-            tạo mùi thơm khác (Acetaldehyde, diacetyl,
-            propanoic acid,...).
-
-        </li>
-
-
-        <li>
-
-            <strong>
-                Cải thiện cấu trúc thực phẩm:
-            </strong>
-
-            Sữa chua là một sản phẩm sữa lên men đặc biệt,
-            có kết cấu mềm và đặc hơn so với nguyên liệu
-            ban đầu là sữa.
-
-            Vị chua nhẹ cùng hương vị tươi mát, dễ chịu
-            đã tạo nên những đặc tính nổi bật của sữa chua
-            như một sản phẩm sữa lên men độc đáo.
-
-            Kết cấu của sữa chua được hình thành nhờ
-            sự sản sinh exopolysaccharide (EPS) đóng vai trò
-            là chất tạo độ nhớt – bởi vi khuẩn axit lactic
-            (LAB).
-
-            Ngoài ra, kết cấu này còn được củng cố bởi
-            quá trình đông tụ, xảy ra do sự trung hòa
-            các điện tích âm trên bề mặt protein sữa –
-            một hệ quả khác từ axit do LAB tạo ra.
-
-            Việc sản xuất EPS phụ thuộc vào chủng
-            vi khuẩn LAB cụ thể.
-
-        </li>
-
-
-        <li>
-
-            <strong>
-                Các đặc tính có lợi cho sức khỏe
-                của vi khuẩn lactic:
-            </strong>
-
-            Các peptide hoạt tính sinh học được tạo ra
-            từ quá trình thủy phân casein trong sữa nhờ
-            vi khuẩn <em>L. helveticus</em> đã được nghiên cứu
-            và chứng minh có tác dụng hạ huyết áp,
-            điều hòa miễn dịch, chống ung thư cũng như
-            khả năng liên kết với canxi.
-
-            <em>L. helveticus</em> được biết đến là một trong
-            những loài vi khuẩn axit lactic (LAB) sở hữu
-            hệ thống phân giải protein hiệu quả.
-
-            Các sản phẩm sữa lên men được ghi nhận là
-            có tác động tích cực đến sức khỏe con người
-            thông qua nhiều cơ chế khác nhau.
-
-            LAB đứng đầu danh sách các vi sinh vật được
-            sử dụng trong chế phẩm probiotic.
-
-            Sữa chua và các chủng LAB cụ thể đã được
-            chứng minh là có tác động tích cực hoặc
-            đầy hứa hẹn đối với sức khỏe; nổi bật nhất
-            là hiệu quả đối với tình trạng kém hấp thu
-            lactose – vấn đề bắt nguồn từ yếu tố di truyền
-            hoặc sự thiếu hụt enzyme lactase.
-
-            Nếu lactose đi xuống đại tràng, nó sẽ nhanh
-            chóng bị hệ vi sinh vật tại đây lên men,
-            dẫn đến sự hình thành khí.
-
-            Chứng bất dung nạp lactose là tình trạng
-            người bệnh gặp các triệu chứng tiêu hóa như
-            đầy hơi, tiêu chảy, chướng bụng và nôn mửa
-            sau khi tiêu thụ sữa hoặc các sản phẩm từ sữa.
-
-            Tuy nhiên, những người bị kém hấp thu lactose
-            thường vẫn dung nạp tốt các sản phẩm sữa lên men,
-            đặc biệt là sữa chua, mặc dù chúng vẫn chứa lactose.
-
-            Lợi ích này đối với quá trình tiêu hóa ở người
-            đã được khẳng định rõ ràng và có thể được giải thích
-            bởi sự hiện diện của enzyme
-            &beta;-galactosidase
-            (có chức năng tương tự lactase) do các vi khuẩn
-            <em>S. thermophilus</em> và
-            <em>L. bulgaricus</em> trong sữa chua sản sinh ra.
-
-        </li>
-
-    </ul>
-
-
-    <!-- =========================
-         SƠ ĐỒ
-    ========================== -->
-
-    <div class="section-title">
-
-        Sơ đồ minh họa quá trình chuyển hóa đường
-        trong sữa thành acid lactic:
-
-    </div>
-
-
-    <div class="image-container">
-
-        <img
-    src="so-do-len-men.png.png"
-    alt="Các con đường lên men chính của glucose"
->
-
-        <div class="image-caption">
-
-            <strong>Hình 1.</strong>
-            Các con đường lên men chính của glucose.
-
-            <br>
-
-            <em>Ghi chú:</em>
-            Hiệu chỉnh từ "Major fermentation pathways
-            of glucose," trong
-            <em>Lactic Acid Bacteria</em>,
-            bởi Trần Đình Kiệt, chèn thêm công thức phân tử.
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         PHẦN B
-    ========================== -->
-
-    <div class="section-title">
-
-        b) Phương trình tổng quát thích hợp
-        biểu diễn quá trình lên men lactic:
-
-    </div>
-
-
-    <div class="formula-box">
-
-        <p>
-            <strong>
-                - Lên men đồng hình:
-            </strong>
-        </p>
-
-        <div class="formula">
-
-            C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>
-            (Glucose/Galactose)
-            &rarr;
-            2C<sub>3</sub>H<sub>6</sub>O<sub>3</sub>
-            + 2ATP
-
-        </div>
-
-
-        <p>
-            <strong>
-                - Lên men dị hình:
-            </strong>
-        </p>
-
-        <div class="formula">
-
-            C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>
-            (Glucose)
-            &rarr;
-            C<sub>3</sub>H<sub>6</sub>O<sub>3</sub>
-            +
-            C<sub>2</sub>H<sub>5</sub>OH
-            +
-            CO<sub>2</sub>
-            +
-            ATP
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         PHẦN C
-    ========================== -->
-
-    <div class="section-title">
-
-        c) Giải thích vì sao sự giảm pH
-        làm thay đổi trạng thái của protein sữa:
-
-    </div>
-
-
-    <p>
-
-        Khi độ pH giảm xuống dưới 5,
-        các micelle casein (loại protein chính trong sữa)
-        sẽ mất cấu trúc bậc ba do sự proton hóa
-        các gốc axit amin của chúng.
-
-        Protein đã biến tính sẽ tái cấu trúc thông qua
-        tương tác với các phân tử kỵ nước khác;
-        chính sự tương tác giữa các phân tử casein này
-        tạo nên cấu trúc mang lại trạng thái bán rắn
-        đặc trưng cho sữa chua.
-
-    </p>
-
-
-    <!-- =========================
-         PHẦN D
-    ========================== -->
-
-    <div class="section-title">
-
-        d) Ảnh hưởng của nhiệt độ và thời gian ủ:
-
-    </div>
-
-
-    <p>
-        <strong>
-            Ảnh hưởng của nhiệt độ ủ:
-        </strong>
-    </p>
-
-
-    <ul>
-
-        <li>
-
-            <strong>
-                Đối với hoạt động của vi khuẩn:
-            </strong>
-
-            <ul>
-
-                <li>
-
-                    <em>Khoảng nhiệt độ tối ưu:</em>
-
-                    Mỗi nhóm vi khuẩn lactic có khoảng
-                    nhiệt độ sinh trưởng tối ưu riêng.
-
-                    Ví dụ: nhóm vi khuẩn ưa nhiệt như
-                    <em>Streptococcus thermophilus</em>
-                    (40–42&deg;C) và
-                    <em>Lactobacillus delbrueckii</em>
-                    subsp.
-                    <em>bulgaricus</em>
-                    (42–46&deg;C) được dùng trong sản xuất
-                    sữa chua;
-
-                    trong khi nhóm vi khuẩn ưa ấm như
-                    <em>Lactococcus lactis</em>
-                    (28–34&deg;C) hay
-                    <em>Leuconostoc</em>
-                    lại thích hợp cho buttermilk
-                    hoặc phô mai.
-
-                    Ở nhiệt độ tối ưu, vi khuẩn
-                    hô hấp/lên men mạnh nhất và sự phối hợp
-                    tương hỗ giữa các chủng
-                    (proto-cooperation) diễn ra đạt hiệu quả cao.
-
-                </li>
-
-
-                <li>
-
-                    <em>Nhiệt độ quá thấp:</em>
-
-                    Làm giảm hoạt tính của hệ enzyme
-                    chuyển hóa, kéo dài pha lag
-                    (pha thích ứng) và làm chậm tốc độ
-                    sinh acid lactic.
-
-                    Ở một số sản phẩm lên men phối hợp,
-                    nhiệt độ thấp có thể làm thay đổi
-                    sự ưu thế giữa các dòng vi khuẩn.
-
-                </li>
-
-
-                <li>
-
-                    <em>Nhiệt độ quá cao:</em>
-
-                    Khi vượt quá ngưỡng chịu nhiệt,
-                    vi khuẩn bị ức chế sinh trưởng,
-                    giảm khả năng tổng hợp enzym hoặc
-                    thậm chí bị tiêu diệt.
-
-                    Nhiệt độ quá cao cũng làm mất cân bằng
-                    tỷ lệ sinh trưởng giữa các chủng
-                    vi khuẩn phối hợp.
-
-                </li>
-
-            </ul>
-
-        </li>
-
-
-        <li>
-
-            <strong>
-                Đối với chất lượng sản phẩm:
-            </strong>
-
-            <ul>
-
-                <li>
-
-                    <em>Nhiệt độ thấp hơn chuẩn:</em>
-
-                    Sữa lâu đông tụ, làm tăng nguy cơ
-                    phát triển của các vi sinh vật tạp nhiễm.
-
-                    Sản phẩm thường bị lỏng, kém chua
-                    và thiếu các hợp chất thơm đặc trưng.
-
-                </li>
-
-
-                <li>
-
-                    <em>Nhiệt độ cao hơn chuẩn:</em>
-
-                    Quá trình axit hóa diễn ra quá nhanh
-                    khiến mạng lưới gel casein hình thành
-                    không đều, dễ dẫn đến hiện tượng
-                    tách nước (tách huyết thanh sữa),
-                    khối đông bị co rút, sản phẩm có vị
-                    chua gắt hoặc xuất hiện mùi vị lạ.
-
-                </li>
-
-            </ul>
-
-        </li>
-
-    </ul>
-
-
-    <p>
-
-        <strong>
-            Ảnh hưởng của thời gian ủ:
-        </strong>
-
-    </p>
-
-
-    <ul>
-
-        <li>
-
-            <strong>
-                Đối với hoạt động của vi khuẩn:
-            </strong>
-
-            <ul>
-
-                <li>
-
-                    <em>Thời gian ủ tối ưu:</em>
-
-                    Vi khuẩn trải qua pha nhân nhanh
-                    (pha mũ), phân cắt đường lactose
-                    thành acid lactic làm giảm pH môi trường
-                    xuống khoảng 4.5–4.7.
-
-                    Tốc độ sản sinh các chất tạo hương thơm
-                    (như acetaldehyde, diacetyl) đạt mức
-                    bão hòa thích hợp.
-
-                </li>
-
-
-                <li>
-
-                    <em>Thời gian ủ quá ngắn:</em>
-
-                    Quần thể vi khuẩn chưa đạt mật độ tế bào
-                    tối đa, chưa tích tụ đủ lượng acid lactic
-                    cần thiết.
-
-                </li>
-
-
-                <li>
-
-                    <em>Thời gian ủ quá dài:</em>
-
-                    Acid lactic tích tụ quá nhiều gây ra
-                    hiện tượng tự acid hóa (autoacidification),
-                    kết hợp với sự cạn kiệt chất dinh dưỡng
-                    làm pH giảm sâu, gây suy giảm mật độ
-                    tế bào vi khuẩn sống.
-
-                </li>
-
-            </ul>
-
-        </li>
-
-
-        <li>
-
-            <strong>
-                Đối với chất lượng sản phẩm:
-            </strong>
-
-            <ul>
-
-                <li>
-
-                    <em>Ủ chưa đủ thời gian:</em>
-
-                    pH chưa giảm đến điểm đẳng điện của casein
-                    (pH &sim; 4.6), làm sữa chưa đông tụ hoàn toàn
-                    hoặc cấu trúc gel bị lỏng lẻo, sản phẩm
-                    có độ chua thấp và hương thơm yếu.
-
-                </li>
-
-
-                <li>
-
-                    <em>Ủ quá thời gian:</em>
-
-                    Sản phẩm bị quá chua (quá acid),
-                    phá vỡ cấu trúc mịn của gel protein
-                    làm nứt khối đông, chảy nước nghiêm trọng
-                    và giảm rõ rệt giá trị cảm quan
-                    của người tiêu dùng.
-
-                </li>
-
-            </ul>
-
-        </li>
-
-    </ul>
-
-
-    <hr>
-
-
-    <!-- =========================
-         TÀI LIỆU THAM KHẢO
-    ========================== -->
-
-    <div class="section-title">
-
-        Tài liệu tham khảo
-
-    </div>
-
-
-    <ol class="reference-list">
-
-        <li>
-
-            Vinderola, G., Ouwehand, A.,
-            Salminen, S., & Von Wright, A. (2024).
-
-            <em>Lactic acid bacteria</em>.
-
-            <a
-                href="https://doi.org/10.1201/9781003352075"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                https://doi.org/10.1201/9781003352075
-            </a>
-
-        </li>
-
-
-        <li>
-
-            Chen, C., Zhao, S., Hao, G.,
-            Yu, H., Tian, H., & Zhao, G. (2017).
-
-            Role of lactic acid bacteria on the yogurt flavour:
-            A review.
-
-            <em>
-                International Journal of Food Properties
-            </em>,
-
-            20(sup1), S316-S330.
-
-            <a
-                href="https://doi.org/10.1080/10942912.2017.1295988"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                https://doi.org/10.1080/10942912.2017.1295988
-            </a>
-
-        </li>
-
-
-        <li>
-
-            Widyastuti, Y.,
-            Rohmatussolihat, &
-            Febrisiantosa, A. (2014).
-
-            The role of lactic acid bacteria
-            in milk fermentation.
-
-            <em>
-                Food and Nutrition Sciences
-            </em>,
-
-            05(04), 435-442.
-
-            <a
-                href="https://doi.org/10.4236/fns.2014.54051"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                https://doi.org/10.4236/fns.2014.54051
-            </a>
-
-        </li>
-
-    </ol>
-
-
-</div>
-
-
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
-
 </html>

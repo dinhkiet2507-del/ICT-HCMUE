@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Bài tập 1: Tự đánh giá năng lực - Hồ sơ học tập">
+    <title>Bài tập 1 - Kết Quả Tự Đánh Giá | Hồ Sơ Học Tập</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* =================================
+           TỰ ĐÁNH GIÁ - GLASSMORPHISM STYLES
+        ================================= */
+
+        .assessment-section {
+            min-height: 100vh;
+            padding: 140px 20px 80px;
+        }
+
+        .assessment-header {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 30px;
+        }
+
+        .assessment-header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .assessment-header p {
+            color: #b8c7dc;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        /* Action Toolbar & Navigation Back Button */
+        .top-navigation-bar {
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 22px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #67e8f9;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: rgba(0, 212, 255, 0.15);
+            border-color: rgba(0, 212, 255, 0.4);
+            color: #ffffff;
+            transform: translateX(-5px);
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .badge-exercise {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 50px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: #67e8f9;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #64b5f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Profile Summary Card */
+        .info-card-container {
+            max-width: 1200px;
+            margin: 0 auto 35px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(80, 180, 255, 0.4);
+        }
+
+        .info-icon {
+            font-size: 32px;
+            background: rgba(70, 150, 255, 0.15);
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            border: 1px solid rgba(100, 180, 255, 0.2);
+        }
+
+        .info-detail h3 {
+            font-size: 14px;
+            color: #8a99ad;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-detail p {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .score-highlight {
+            color: #4facfe;
+            text-shadow: 0 0 12px rgba(79, 172, 254, 0.5);
+        }
+
+        /* Glassmorphism Table Design */
+        .table-wrapper {
+            max-width: 1200px;
+            margin: 0 auto 50px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .glass-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #e1e9f5;
+            text-align: left;
+        }
+
+        .glass-table th, 
+        .glass-table td {
+            padding: 16px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+            line-height: 1.6;
+            vertical-align: top;
+        }
+
+        .glass-table th {
+            background: rgba(30, 45, 70, 0.7);
+            color: #81d4fa;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid rgba(100, 180, 255, 0.3);
+            text-align: center;
+        }
+
+        .glass-table tbody tr {
+            transition: background 0.25s ease;
+        }
+
+        .glass-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .glass-table td.cat-header {
+            background: rgba(255, 255, 255, 0.02);
+            font-weight: 600;
+            color: #64b5f6;
+            vertical-align: middle;
+        }
+
+        .score-badge {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            background: rgba(79, 172, 254, 0.2);
+            border: 1px solid rgba(79, 172, 254, 0.5);
+            color: #00f2fe;
+            font-weight: 700;
+            font-size: 15px;
+            box-shadow: 0 0 10px rgba(79, 172, 254, 0.2);
+        }
+
+        .total-row {
+            background: rgba(40, 90, 160, 0.25) !important;
+            font-weight: bold;
+        }
+
+        .total-row td {
+            border-top: 2px solid rgba(100, 180, 255, 0.4);
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        /* Swot & Action Plan Cards */
+        .section-title {
+            max-width: 1200px;
+            margin: 50px auto 25px;
+            font-size: 26px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .swot-grid {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .swot-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .swot-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .swot-card.strengths {
+            border-top: 4px solid #4caf50;
+        }
+
+        .swot-card.weaknesses {
+            border-top: 4px solid #ff5252;
+        }
+
+        .swot-card h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .swot-card.strengths h3 { color: #81c784; }
+        .swot-card.weaknesses h3 { color: #ff8a80; }
+
+        .swot-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .swot-card li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            color: #c0d1e5;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .swot-card.strengths li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #66bb6a;
+            font-weight: bold;
+        }
+
+        .swot-card.weaknesses li::before {
+            content: "✕";
+            position: absolute;
+            left: 0;
+            color: #ff5252;
+            font-weight: bold;
+        }
+
+        /* Action Plan Card */
+        .plan-card {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-top: 4px solid #00f2fe;
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 35px;
+        }
+
+        .plan-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .plan-card li {
+            position: relative;
+            padding-left: 30px;
+            color: #d1e3f8;
+            font-size: 14px;
+            line-height: 1.7;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 15px 18px 15px 38px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .plan-card li::before {
+            content: "➔";
+            position: absolute;
+            left: 14px;
+            top: 15px;
+            color: #00f2fe;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .table-wrapper {
+                overflow-x: auto;
+            }
+            .glass-table {
+                min-width: 850px;
+            }
+            .plan-card ul {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .swot-grid {
+                grid-template-columns: 1fr;
+            }
+            .assessment-header h1 {
+                font-size: 32px;
+            }
+            .assessment-section {
+                padding-top: 110px;
+            }
+            .top-navigation-bar {
+                flex-direction: column-reverse;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =================================
+         PARTICLE BACKGROUND
+    ================================= -->
+    <canvas id="particles"></canvas>
+    <div class="background"></div>
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+
+    <!-- =================================
+         NAVBAR
+    ================================= -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span>HỒ SƠ HỌC TẬP</span>
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li><a href="about.html">Giới thiệu</a></li>
+                    <li><a href="exercises.html" class="active">Bài tập</a></li>
+                    <li><a href="hoclieu.html">Học liệu</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- =================================
+         NỘI DUNG TỰ ĐÁNH GIÁ
+    ================================= -->
+    <main>
+        <section class="assessment-section">
+
+            <!-- TOP NAVIGATION TOOLBAR WITH BACK BUTTON -->
+            <div class="top-navigation-bar">
+                <a href="exercises.html" class="btn-back">
+                    <span>←</span> Quay lại trang Bài tập
+                </a>
+                <div class="badge-exercise">
+                    📝 BÀI TẬP / BÀI TẬP 1
+                </div>
+            </div>
+
+            <div class="assessment-header">
+                <h1><span class="gradient-text">Kết Quả Tự Đánh Giá Năng Lực</span></h1>
+                <p>Báo cáo tự đánh giá năng lực ứng dụng công nghệ thông tin và kế hoạch phát triển bản thân trong môi trường số.</p>
+            </div>
+
+            <!-- PROFILE SUMMARY CARDS -->
+            <div class="info-card-container">
+                <div class="info-card">
+                    <div class="info-icon">👤</div>
+                    <div class="info-detail">
+                        <h3>Họ và tên</h3>
+                        <p>Trần Đình Kiệt</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">📅</div>
+                    <div class="info-detail">
+                        <h3>Ngày đánh giá</h3>
+                        <p>20/09/2026</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">🏆</div>
+                    <div class="info-detail">
+                        <h3>Tổng điểm đạt được</h3>
+                        <p class="score-highlight">28 / 45</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ASSESSMENT TABLE -->
+            <div class="table-wrapper">
+                <table class="glass-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 16%;">Năng lực thành tố</th>
+                            <th style="width: 24%;">Chỉ số hành vi</th>
+                            <th style="width: 18%;">Mức độ Đạt (1đ)</th>
+                            <th style="width: 18%;">Mức độ Khá (2đ)</th>
+                            <th style="width: 18%;">Mức độ Tốt (3đ)</th>
+                            <th style="width: 6%; text-align: center;">Điểm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- NHÓM 1 -->
+                        <tr>
+                            <td rowspan="3" class="cat-header">Khai thác thông tin, dữ liệu và phần mềm dạy học</td>
+                            <td>Xác định nhu cầu và tìm kiếm thông tin, dữ liệu, phần mềm</td>
+                            <td>Biết cách xác định nhu cầu thông tin, dữ liệu và phần mềm dạy học, nhưng chưa thể tự thực hiện tìm kiếm.</td>
+                            <td>Có thể tự tìm kiếm thông tin, dữ liệu và phần mềm dạy học, nhưng chưa thể phân loại và đánh giá chất lượng nguồn thông tin.</td>
+                            <td>Có thể tự xác định nhu cầu, tìm kiếm, phân loại, đánh giá chất lượng và lựa chọn thông tin, dữ liệu và phần mềm dạy học phù hợp.</td>
+                            <td class="text-center"><span class="score-badge">2</span></td>
+                        </tr>
+                        <tr>
+                            <td>Đánh giá thông tin, dữ liệu, phần mềm và sử dụng chúng</td>
+                            <td>Chưa thể đánh giá độ tin cậy và hiệu quả của thông tin, dữ liệu và phần mềm dạy học.</td>
+                            <td>Có thể đánh giá sơ bộ độ tin cậy và hiệu quả của thông tin, dữ liệu và phần mềm dạy học, nhưng chưa thể áp dụng hiệu quả vào thực tế.</td>
+                            <td>Có thể đánh giá một cách chính xác độ tin cậy và hiệu quả của thông tin, dữ liệu và phần mềm dạy học, và ứng dụng hiệu quả vào thực tế giảng dạy.</td>
+                            <td class="text-center"><span class="score-badge">1</span></td>
+                        </tr>
+                        <tr>
+                            <td>Quản lý và lưu trữ thông tin, dữ liệu, phần mềm</td>
+                            <td>Chưa biết cách quản lý và lưu trữ thông tin, dữ liệu và phần mềm dạy học một cách hiệu quả.</td>
+                            <td>Có thể quản lý và lưu trữ thông tin, dữ liệu và phần mềm dạy học, nhưng chưa sử dụng phần mềm hỗ trợ quản lý hiệu quả.</td>
+                            <td>Có thể quản lý và lưu trữ thông tin, dữ liệu và phần mềm dạy học một cách khoa học, hiệu quả, sử dụng thành thạo phần mềm hỗ trợ quản lý.</td>
+                            <td class="text-center"><span class="score-badge">1</span></td>
+                        </tr>
+
+                        <!-- NHÓM 2 -->
+                        <tr>
+                            <td rowspan="3" class="cat-header">Hợp tác và giao tiếp trong môi trường số</td>
+                            <td>Nhận thức các chuẩn mực hành vi, giao tiếp, ứng xử trong môi trường số</td>
+                            <td>Chưa nhận thức rõ các chuẩn mực hành vi, giao tiếp, ứng xử trong môi trường số.</td>
+                            <td>Nhận thức được các chuẩn mực hành vi, giao tiếp, ứng xử trong môi trường số, nhưng chưa thể áp dụng một cách linh hoạt.</td>
+                            <td>Nhận thức đầy đủ và có thể áp dụng một cách linh hoạt các chuẩn mực hành vi, giao tiếp, ứng xử phù hợp trong môi trường số.</td>
+                            <td class="text-center"><span class="score-badge">2</span></td>
+                        </tr>
+                        <tr>
+                            <td>Tham gia cộng đồng diễn đàn trực tuyến, cộng tác trong công việc thông qua công nghệ số</td>
+                            <td>Chưa tham gia cộng đồng diễn đàn trực tuyến, cộng tác trong công việc thông qua công nghệ số.</td>
+                            <td>Có tham gia cộng đồng diễn đàn trực tuyến, nhưng chưa biết cách cộng tác trong công việc thông qua công nghệ số.</td>
+                            <td>Tham gia tích cực trong cộng đồng diễn đàn trực tuyến, cộng tác hiệu quả trong công việc thông qua công nghệ số.</td>
+                            <td class="text-center"><span class="score-badge">1</span></td>
+                        </tr>
+                        <tr>
+                            <td>Thực hành vai trò người dạy và sử dụng các dịch vụ qua nền tảng số</td>
+                            <td>Chưa tự tin thực hành vai trò người dạy trong việc sử dụng các dịch vụ thông qua nền tảng số.</td>
+                            <td>Có thể thực hành được vai trò người dạy và sử dụng các dịch vụ thông qua nền tảng số, nhưng chưa thành thạo và hiệu quả.</td>
+                            <td>Thực hành thành thạo vai trò người dạy và sử dụng hiệu quả các dịch vụ qua nền tảng số.</td>
+                            <td class="text-center"><span class="score-badge">2</span></td>
+                        </tr>
+
+                        <!-- NHÓM 3 -->
+                        <tr>
+                            <td rowspan="2" class="cat-header">Sáng tạo nội dung số và an toàn số</td>
+                            <td>Kiểm soát được dấu chân số, duy trì an toàn số, cân bằng số, nhận biết rủi ro và bảo vệ môi trường số trong quá trình sử dụng thiết bị và dịch vụ số</td>
+                            <td>Chưa kiểm soát được dấu chân số, không thể duy trì an toàn số, cân bằng số, chưa nhận biết rủi ro.</td>
+                            <td>Có thể kiểm soát dấu chân số, duy trì an toàn số, cân bằng số, nhận biết rủi ro, nhưng chưa bảo vệ được môi trường số trong quá trình sử dụng các thiết bị và dịch vụ số.</td>
+                            <td>Kiểm soát được dấu chân số, duy trì được an toàn số, cân bằng số, nhận biết rủi ro và bảo vệ được môi trường số trong quá trình sử dụng các thiết bị và dịch vụ số.</td>
+                            <td class="text-center"><span class="score-badge">1</span></td>
+                        </tr>
+                        <tr>
+                            <td>Bảo vệ quyền riêng tư và định danh số; xây dựng, phát triển và sử dụng nội dung số theo các cơ sở pháp lí</td>
+                            <td>Chưa biết cách bảo vệ quyền riêng tư và định danh số.</td>
+                            <td>Bảo vệ được quyền riêng tư và định danh số, nhưng chưa xây dựng, chưa sử dụng nội dung số theo các cơ sở pháp lí.</td>
+                            <td>Bảo vệ được quyền riêng tư và định danh số; xây dựng được, có thể phát triển và sử dụng được nội dung số theo các cơ sở pháp lí.</td>
+                            <td class="text-center"><span class="score-badge">2</span></td>
+                        </tr>
+
+                        <!-- NHÓM 4 -->
+                        <tr>
+                            <td rowspan="4" class="cat-header">Học tập nâng cao kĩ năng số</td>
+                            <td>Tạo lập, xây dựng nội dung số (công cụ và phương pháp), ngôn ngữ lập trình (tham gia vào quá trình xây dựng, phát triển ứng dụng trên nền tảng số), thực hành tư duy đổi mới sáng tạo trong xây dựng nội dung số</td>
+                            <td>Chưa tạo lập được nội dung số (công cụ và phương pháp), chưa tạo lập được một số ngôn ngữ lập trình (tham gia vào quá trình xây dựng, phát triển ứng dụng trên nền tảng số), chưa tạo lập được thực hành tư duy đổi mới sáng tạo trong việc xây dựng nội dung số.</td>
+                            <td>Có thể tạo lập được nội dung số (công cụ và phương pháp) và ngôn ngữ lập trình (tham gia vào quá trình xây dựng, phát triển ứng dụng trên nền tảng số) nhưng chưa thực hành được tư duy đổi mới sáng tạo trong xây dựng nội dung số.</td>
+                            <td>Tạo lập, xây dựng được nội dung số (công cụ và phương pháp) và ngôn ngữ lập trình (tham gia vào quá trình xây dựng, phát triển ứng dụng trên nền tảng số), thực hành được tư duy đổi mới sáng tạo trong xây dựng nội dung số.</td>
+                            <td class="text-center"><span class="score-badge">3</span></td>
+                        </tr>
+                        <tr>
+                            <td>Nhận biết xu thế và cơ hội của dạy học và đào tạo trực tuyến</td>
+                            <td>Chưa nhận biết được xu thế và cơ hội của dạy học và đào tạo trực tuyến.</td>
+                            <td>Nhận biết được xu thế của dạy học và đào tạo trực tuyến, nhưng chưa có cơ hội để trải nghiệm.</td>
+                            <td>Nhận biết được xu thế và có cơ hội để thực hiện dạy học và đào tạo trực tuyến.</td>
+                            <td class="text-center"><span class="score-badge">3</span></td>
+                        </tr>
+                        <tr>
+                            <td>Học tập số (công cụ và phương pháp)</td>
+                            <td>Chưa biết cách tự học trong môi trường số.</td>
+                            <td>Có thể tự học tập được trong môi trường số (sử dụng được một số công cụ và phương pháp).</td>
+                            <td>Chủ động tự học trong môi trường số (Sử dụng đa dạng và hiệu quả các công cụ và phương pháp).</td>
+                            <td class="text-center"><span class="score-badge">3</span></td>
+                        </tr>
+                        <tr>
+                            <td>Truy cập mở đến các nguồn tài nguyên học tập số</td>
+                            <td>Chưa truy cập mở đến nguồn tài nguyên học tập số.</td>
+                            <td>Có truy cập mở đến nguồn tài nguyên học tập số nhưng không thường xuyên sử dụng.</td>
+                            <td>Thường xuyên truy cập mở đến nguồn tài nguyên học tập số.</td>
+                            <td class="text-center"><span class="score-badge">2</span></td>
+                        </tr>
+
+                        <!-- NHÓM 5 -->
+                        <tr>
+                            <td rowspan="3" class="cat-header">Ứng dụng CNTT trong dạy học</td>
+                            <td>Ứng dụng trong thiết kế kế hoạch dạy học</td>
+                            <td>Chưa sử dụng được CNTT trong thiết kế kế hoạch dạy học.</td>
+                            <td>Sử dụng được một số ứng dụng của CNTT (phần mềm) trong thiết kế kế hoạch dạy học, tuy vậy chưa hiệu quả.</td>
+                            <td>Sử dụng đa dạng và hiệu quả những ứng dụng của CNTT trong thiết kế kế hoạch dạy học.</td>
+                            <td class="text-center"><span class="score-badge">2</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ứng dụng trong tổ chức dạy học</td>
+                            <td>Chưa nhận biết và ứng dụng được CNTT trong tổ chức dạy học.</td>
+                            <td>Nhận biết được các ứng dụng CNTT và áp dụng nó vào trong tổ chức dạy học.</td>
+                            <td>Phân loại được các chức năng của CNTT và áp dụng tốt vào tổ chức dạy học.</td>
+                            <td class="text-center"><span class="score-badge">2</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ứng dụng trong kiểm tra, đánh giá</td>
+                            <td>Chưa sử dụng được CNTT vào kiểm tra, đánh giá.</td>
+                            <td>Có thể sử dụng được một số công cụ CNTT vào kiểm tra, đánh giá nhưng chưa sử dụng được kết quả kiểm tra, đánh giá.</td>
+                            <td>Sử dụng linh hoạt công cụ CNTT trong kiểm tra, đánh giá, sử dụng được kết quả kiểm tra, đánh giá vào cải tiến hoạt động giảng dạy.</td>
+                            <td class="text-center"><span class="score-badge">1</span></td>
+                        </tr>
+
+                        <!-- TỔNG CỘNG -->
+                        <tr class="total-row">
+                            <td colspan="5" style="text-align: right; text-transform: uppercase;"><strong>Tổng cộng điểm tự đánh giá:</strong></td>
+                            <td class="text-center"><span class="score-badge" style="background: rgba(0, 242, 254, 0.4); border-color: #00f2fe; color: #ffffff;">28</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SWOT ANALYSIS SECTION -->
+            <h2 class="section-title">
+                <span>⚡</span> Đánh Giá Điểm Mạnh & Điểm Yếu
+            </h2>
+
+            <div class="swot-grid">
+                <div class="swot-card strengths">
+                    <h3><span>💪</span> Điểm Mạnh</h3>
+                    <ul>
+                        <li>Biết sử dụng nhiều công cụ, phần mềm (Canva, CapCut, Photoshop, code LaTeX,...).</li>
+                        <li>Sử dụng thiết bị điện tử (PC, điện thoại,...) khá tốt do được tiếp xúc và sử dụng từ bé.</li>
+                        <li>Có chí cầu tiến, ham học hỏi.</li>
+                        <li>Làm deadline chậm nhưng luôn đúng giờ (có khả năng và được bạn bè tin tưởng).</li>
+                    </ul>
+                </div>
+
+                <div class="swot-card weaknesses">
+                    <h3><span>⚠️</span> Điểm Yếu</h3>
+                    <ul>
+                        <li>Biết mỗi thứ một ít nhưng không một phần mềm, công cụ nào ở mức thành thạo.</li>
+                        <li>Khả năng đánh giá chất lượng thông tin còn yếu, thường hoang mang khi gặp nhiều nguồn thông tin khác nhau.</li>
+                        <li>Nóng nảy, dễ bùng nổ khi gặp nhiều deadline.</li>
+                        <li>Trình độ ngoại ngữ yếu.</li>
+                        <li>Kĩ năng quản lí (thời gian, thông tin,...) yếu, thường xuyên “nước đến chân mới nhảy”, lục lọi tài liệu trong vô vọng vì nhớ mình có thấy nhưng không biết ở đâu.</li>
+                        <li>Chưa biết phải ứng dụng ICT trong học tập và dạy học (làm thêm) như thế nào cho hiệu quả.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ACTION PLAN SECTION -->
+            <h2 class="section-title">
+                <span>🎯</span> Kế Hoạch Phát Triển Năng Lực Bản Thân
+            </h2>
+
+            <div class="plan-card">
+                <ul>
+                    <li>Tiếp tục học và sử dụng các công cụ, phần mềm phục vụ học tập và dạy học, ưu tiên những công cụ có tính ứng dụng cao, tránh học quá nhiều thứ nhưng không sử dụng thành thạo được cái nào.</li>
+                    <li>Nâng cao trình độ ngoại ngữ bằng cách tạo cho mình thói quen học ngoại ngữ mỗi ngày.</li>
+                    <li>Cải thiện khả năng kiểm soát cảm xúc, cố gắng không để dồn deadline, ưu tiên bình tĩnh, xác định việc quan trọng trước và xử lý từng deadline thay vì nóng vội hoặc trì hoãn.</li>
+                    <li>Hình thành thói quen kiểm tra nguồn, đối chiếu nhiều tài liệu và đánh giá độ tin cậy trước khi sử dụng thông tin.</li>
+                    <li>Lập kế hoạch hoạt động trong tuần cho bản thân để sắp xếp và xử lí các nhiệm vụ học tập và công việc cá nhân hiệu quả, tìm hiểu thêm công cụ hỗ trợ quản lý thời gian như Google Calendar.</li>
+                    <li>Tập sắp xếp nội dung, chia vào các folder tương ứng để quản lý thông tin khoa học hơn.</li>
+                </ul>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- =================================
+         FOOTER
+    ================================= -->
+    <footer>
+        © 2026 Trần Đình Kiệt. All Rights Reserved.
+    </footer>
+
+    <!-- =================================
+         JAVASCRIPT
+    ================================= -->
+    <script src="script.js"></script>
+</body>
+
+</html>
